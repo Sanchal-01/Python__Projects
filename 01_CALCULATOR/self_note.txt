@@ -1,0 +1,8 @@
+# Project Setup:
+1. Create a parent directory named after the project.
+2. Save the main entry point file as 'main.py'.
+
+# Implementation Guidelines:
+- Wrap core execution logic inside try-except blocks for robust error handling.
+- Use a 'while True' loop to keep the application running.
+- Provide a clear option for the user to press 'q' to quit the application.
