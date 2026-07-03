@@ -1,0 +1,99 @@
+======================================================================
+PROJECT NOTES: THE PYTHONEERS QUIZ SYSTEM
+======================================================================
+
+Overview:
+---------
+This project is a text-based Quiz/Trivia Game (resembling Kaun Banega Crorepati / Who Wants to Be a Millionaire).
+It sequentially asks the player multiple-choice questions, validates their inputs against 
+stored correct answers, awards incremental cash prizes for correct answers, and terminates early 
+on an incorrect response.
+
+# The program:
+# 1. Displays one question at a time.
+# 2. Shows four options.
+# 3. Accepts user's answer.
+# 4. Checks whether the answer is correct.
+# 5. Rewards prize money for every correct answer.
+# 6. Ends the game immediately if a wrong answer is selected.
+
+
+----------------------------------------------------------------------
+1. DATA STRUCTURE ANALYSIS
+----------------------------------------------------------------------
+
+A. The 'questions' List (List of Lists):
+   - Type: 2D List (Nested List)
+   - Structure: Each inner list contains exactly 6 elements representing a complete question packet.
+     * Index 0: The question text (String)
+     * Index 1: Option A (String)
+     * Index 2: Option B (String)
+     * Index 3: Option C (String)
+     * Index 4: Option D (String)
+     * Index 5: Correct Option Index (Integer from 1 to 4)
+   
+B. The 'prizes' List:
+   - Type: 1D List (Flat List)
+   - Purpose: Stores the cash prize amounts matching each sequential question.
+   - Design Note: The length of the 'prizes' list matches the length of the 'questions' list (11 items).
+
+C. The Loop Index Counter 'i':
+   - Initialized to: 0
+   - Purpose: Tracking the index of the current prize tier corresponding to the active question.
+
+
+--------------IMPROVEMENT--------------
+
+D. Wrapped up the if else logic inside the try - except block :
+   - This helped to deal with any situations where the user enters a enters letters like 'a' to 'z' instead of numbers of range '1' to '4'
+   - In this case if any error occurs the exception block would be executed which signifies the error and asks user to restart the game again.
+
+
+
+----------------------------------------------------------------------
+2. LOGICAL FLOW & CORE ENGINE (`for` Loop Breakdown)
+----------------------------------------------------------------------
+
+The game operates entirely within a `for question in questions:` loop structure:
+
+Step 1: Unpacking & Displaying the Question
+   - `question[0]` extracts the text prompt.
+   - `question[1]` to `question[4]` are rendered with labels 'a.', 'b.', 'c.', 'd.' respectively.
+
+Step 2: Capturing User Input
+   - The code prompts the user using `input()`.
+   - Critical Conversion: The input is wrapped in `int(...)` to convert the string input ("1", "2", etc.) into an integer type. 
+     This is crucial because the correct option index at `question[5]` is stored as an integer.
+
+Step 3: Verification Logic (`if-else` block)
+   - Logic: `if (question[5] == a):`
+   - IF TRUE:
+     * Outputs "Correct Answer".
+     * Fetches the current prize using `prizes[i]`.
+     * Increments the pointer `i += 1` to target the next prize tier for the upcoming question.
+   - IF FALSE (The user enters a wrong index):
+     * Outputs the correct answer index position to the user.
+     * Triggers `break`. This completely terminates the loop immediately, preventing further questions from being asked and ending the game.
+
+----------------------------------------------------------------------
+3. DRY RUN / WALKTHROUGH OF ITERATION 1
+----------------------------------------------------------------------
+- Loop starts: `question` becomes the 1st inner list.
+- Output: "Who is Shah Rukh Khan?" followed by options.
+- User inputs: 3
+- Check: `question[5]` is 3. Since `3 == 3`, the block executes.
+- Output: "Correct Answer" -> "You won 100000"
+- Tracker adjustment: `i` goes from 0 to 1.
+- Loop proceeds to the next item.
+
+----------------------------------------------------------------------
+4. AREAS FOR POTENTIAL CODE IMPROVEMENT / ROBUSTNESS
+----------------------------------------------------------------------
+If we want to upgrade this codebase in the future, consider fixing these edge cases:
+1. Input Validation: If a user enters letters like 'a' or 'b' instead of numbers '1'-'4', the program will crash with a `ValueError`. Wrapping `int(input())` in a try-except block would prevent this.
+2. Index Out of Bounds: If `questions` has more elements than `prizes`, `prizes[i]` will eventually raise an `IndexError`. Using Python's built-in `enumerate(questions)` is a cleaner approach than manually managing the `i` index counter.
+
+
+
+# IMPROVEMENTS :
+1. COVERED 
