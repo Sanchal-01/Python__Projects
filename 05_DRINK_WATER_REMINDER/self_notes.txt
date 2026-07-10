@@ -1,0 +1,67 @@
+======================================================================
+PROJECT NOTES: WATER DESKTOP REMINDER SYSTEM
+======================================================================
+
+Overview:
+---------
+This project is a background automation utility designed to manage healthy hydration habits during long programming sessions. 
+It creates a persistent background process that tracks time intervals and uses native operating system APIs via the third-party 
+`plyer` library to push visual alert notifications directly onto the user's desktop screen.
+
+The program:
+1. Imports the time management library (`time`).
+2. Pulls the specialized operating system alert module (`notification`) from `plyer`.
+3. Sets up a persistent application running loop.
+4. Generates an immediate command-line warning text in the local console window.
+5. Fires a rich, desktop-native popup alert window featuring a custom header and payload message.
+6. Puts the execution stream to sleep to manage system resources and stagger notifications.
+
+----------------------------------------------------------------------
+1. DATA STRUCTURE & VARIABLE ANALYSIS
+----------------------------------------------------------------------
+
+A. The 'notification.notify()' Parameters:
+   - title: String data (" Drink Water "). Sets the bold, primary header displayed at the top of the desktop notification card.
+   - message: String data ("You need to drink some water"). Holds the lower description body detailing the action required.
+
+B. The Sleep Math Argument ('60*60'):
+   - Type: Integer mathematical expression evaluation (Equates to 3600).
+   - Purpose: Multiplies 60 seconds by 60 minutes to establish an exact, clean 1-hour delay window.
+
+----------------------------------------------------------------------
+2. LOGICAL FLOW & CORE ENGINE (Step-by-Step Breakdown)
+----------------------------------------------------------------------
+
+The program processes operations via three distinct repeating phases:
+
+Phase 1: Infinite Cycle Initialization
+   - Step 1: Evaluates the loop controller expression `while True`. Since the boolean parameter is hardcoded to true, the loop can never terminate naturally.
+   - Step 2: Executes a terminal visual backup print (`print("Please sip some water !!")`) so the console logs execution timestamps if kept open.
+
+Phase 2: OS Notification Dispatch
+   - Step 1: Invokes `notification.notify(...)`. This bypasses Python's bubble space and hooks straight into Windows, macOS, or Linux toast servers.
+   - Step 2: Renders a temporary graphic tray alert card on the user's operating system environment.
+
+Phase 3: Hardware Thread Hibernation
+   - Step 1: Hits the operational barrier `time.sleep(3600)`.
+   - Step 2: Completely pauses the Python process thread, relinquishing CPU processing power so the script doesn't consume system resources while waiting.
+   - Step 3: Wakes up after exactly 3600 seconds pass, looping instantly back up to Phase 1 to execute the entire notification sequence again.
+
+----------------------------------------------------------------------
+3. DRY RUN / WALKTHROUGH WITH 1 CYCLE
+----------------------------------------------------------------------
+- Script starts up.
+- Enters `while True` engine block.
+- Console outputs text line: "Please sip some water !!"
+- Desktop popup springs up on screen flashing: " Drink Water -> You need to drink some water".
+- Script hits `time.sleep(3600)`. CPU allocation drops to near 0% for the script.
+- Hour mark ticks over. Script wakes up, checks `while True` status, and re-triggers the prompt block loop.
+
+----------------------------------------------------------------------
+4. AREAS FOR POTENTIAL CODE IMPROVEMENT / ROBUSTNESS
+----------------------------------------------------------------------
+If we want to upgrade this codebase in the future, consider adding these solutions:
+1. Graceful Shutdown Framework: Currently, the user must forcefully crash the terminal window to close the app. Introducing try-except catch blocks 
+   listening for `KeyboardInterrupt` triggers lets the application say goodbye and shut down cleanly when `Ctrl+C` is hit.
+2. Dynamic Configuration Management: Hardcoding 60*60 limits adaptability. Adding a console variable prompt like `minutes = int(input(...))` at the start 
+   lets the user customize their reminder frequency.
